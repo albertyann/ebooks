@@ -1,0 +1,6 @@
+[book]
+authors = ["Abot Yann"]
+language = "zh"
+multilingual = false
+src = "src"
+title = "快速计算法"
