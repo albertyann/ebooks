@@ -7,3 +7,4 @@
 - [多位数乘法](./chapter_5.md)
 - [多位数除法](./chapter_6.md)
 - [附录](./chapter_7.md)
+- [后记](./chapter_8.md)
