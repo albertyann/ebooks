@@ -1,9 +1,9 @@
 [book]
-authors = ["云涛"]
+authors = ["史丰收"]
 language = "zh"
 multilingual = false
-src = "blog"
-title = "我的网志"
+src = "速算"
+title = "快速计算法"
 
 [output.html]
 mathjax-support = true
