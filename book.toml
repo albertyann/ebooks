@@ -1,9 +1,9 @@
 [book]
-authors = ["Abot Yann"]
+authors = ["云涛"]
 language = "zh"
 multilingual = false
-src = "src"
-title = "快速计算法"
+src = "blog"
+title = "我的网志"
 
 [output.html]
 mathjax-support = true
