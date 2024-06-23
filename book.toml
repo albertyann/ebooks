@@ -2,8 +2,8 @@
 authors = ["云涛"]
 language = "zh"
 multilingual = false
-src = "blog"
-title = "我的网志"
+src = "计算机基础"
+title = "计算机基础文章"
 
 [output.html]
 mathjax-support = true
