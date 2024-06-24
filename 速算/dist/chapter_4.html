@@ -1,0 +1,504 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>多位数加法与减法</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 前言</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 一位数乘多位数</a></li><li class="chapter-item expanded "><a href="chapter_4.html" class="active"><strong aria-hidden="true">4.</strong> 多位数加法与减法</a></li><li class="chapter-item expanded "><a href="chapter_5.html"><strong aria-hidden="true">5.</strong> 多位数乘法</a></li><li class="chapter-item expanded "><a href="chapter_6.html"><strong aria-hidden="true">6.</strong> 多位数除法</a></li><li class="chapter-item expanded "><a href="chapter_7.html"><strong aria-hidden="true">7.</strong> 附录</a></li><li class="chapter-item expanded "><a href="chapter_8.html"><strong aria-hidden="true">8.</strong> 后记</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="多位数加法与减法"><a class="header" href="#多位数加法与减法">多位数加法与减法</a></h1>
+<p>加和减的速算法，除具有高位算起的特点外，还有以下特点：</p>
+<ol>
+<li>以指算为基础。把手指作为一种简便的计算工具，脑记十位数，手示个位数，按照一定的规律手算笔记，既可减少思维和计算上的负担，也有利于提高口算能力。</li>
+<li>实行算法上的转化。对于多位数减法、连减及加减混合，我们运用补数和负数概念，将减转化成加进行计算。这样，既简便了运算法则，也避免了计算过程中退位和连续退位的麻烦，有助于提高运算速度。</li>
+</ol>
+<p>下面简要介绍加减速算的方法。</p>
+<h2 id="一手指记数"><a class="header" href="#一手指记数">一、手指记数</a></h2>
+<p>以手指不同的伸或屈，分别表示十个基本数字。一般用左手，当手指表示某数后，五个指头自然地分成两部分，和拇指方向相同的部分叫该数的外指，和拇指方向相反的部分叫内指。现具体作如下规定：</p>
+<ol>
+<li>拇指屈指表示“1”。这时，“1”的外指是1，内指是4，如图（一）所示。</li>
+<li>拇指、食指同时屈指表示“2”。这时，“2”的外指是2，内指是3，如图（二）所示。</li>
+<li>拇指、食指、中指同时屈指表示“3”。这时“3”的外指是3，内指是2，如图（三）所示。</li>
+<li>拇指、食指、中指、无名指同时屈指表示“4”。这时，“4”的外指是4，内指是1，如图（四）所示。</li>
+<li>五指同时屈指表示“5”。这时，“5”的外指是5，内指是0，如图（五）所示。</li>
+<li>拇指伸出表示“6”。这时，“6”的外指是1，内指是4，如图（六）所示）</li>
+<li>拇指、食指同时伸出表示“7”。这时，“7”的外指是2，内指是3，如图（七）所示。</li>
+<li>拇指、食指、中指同时伸出表示“8”。这时，“8”的外指是3，内指是2，如图（八）所示。</li>
+<li>拇指、食指、中指、无名指同时伸出表示“9”。这时，“9”的外指是4，内指是1，如图（九）所示。</li>
+<li>五指全部同时仲出表示“0”。这时，“0”的外指是5，内指是0，如图（十）所示。</li>
+</ol>
+<h2 id="二加减指算基本类型"><a class="header" href="#二加减指算基本类型">二、加减指算基本类型</a></h2>
+<p>在加减指算中，必须掌握凑数、尾数和补数等概念。</p>
+<p>指算是加减运算的基础，初学时可能有点不习惯，一定要反复练习，熟能生巧。</p>
+<p>凑数 ———— 两数之和等于5，它们互为凑数。如：2和3、1和4、5和0各互为凑数。</p>
+<p>尾数 ———— 小于10而超5的数，都可分成5和几，这里的“几”就叫该数的尾数。如：6可分成5和1，1叫6的尾数；7可分成5和2，2叫7的尾数。</p>
+<p>补数 ———— 两数之和是10、100、1000、……，它们互为补数。</p>
+<p>互补的两数具有前位之和是九、末位之和是十的特点。
+因此，求一个数的补数只要按“前位凑九、末位凑十”即可
+求出。</p>
+<h3 id="1直加直减类"><a class="header" href="#1直加直减类">1.直加直减类</a></h3>
+<h4 id="1直加"><a class="header" href="#1直加">（1）直加</a></h4>
+<p>两数相加，第一加数在0～4或5～9之间，而
+第二加数不超5。计算时可直接加上加数而求出和。如6+3，
+6的内指是4，够加第二加数3，因此，可直加3而得到9。下面
+的题目都可直加。
+| 0+1(2、3、4、5) | 5+1(2、3、4、5) |
+|----------------|----------------|
+| 1+1(2、3、4) | 6+1(2、3、4) |
+| 2+1(2、3) | 7+1(2、3) |
+| 3+1(2) | 8+1(2) |
+| 4+1 | 9+1 |</p>
+<p>直加的指算可以归纳为如下口诀：“加看内指，够加直
+加”。</p>
+<p>在这里有两点值得注意：</p>
+<ul>
+<li>在直加运算中，由第一加数的内指表达第二加数时，应按“数群”一次屈指或伸指，不可逐一累加。</li>
+<li>在这种类型中，有5+5、6+4、7+3、8+2、9+1，两加数恰好互补。其和是10，应脑记十位，手示0，即互补进1。</li>
+</ul>
+<h4 id="2-直减"><a class="header" href="#2-直减">(2) 直减</a></h4>
+<p>两数相减，被减数在5～1或10～6之间，而减数不超5。计算时可以直减得到差数。如8－2，8的外指是3，够减去减数2，因此，可直减2而得到6。下面的题目都可直减。</p>
+<pre><code>5-1(2、3、4、5)
+10-1(2、3、4、5)
+4-1(2、3、4)
+9-1(2、3、4)
+3-1(2、3)
+8-1(2、3)
+2-1(2)
+7-1(2)
+1-1
+6-1
+</code></pre>
+<p>其中，10-1（2、3、4、5）必须先退1（即脑记的十位），然后，由手指伸屈表示其差。直减指算可以归纳为如下口诀：“减看外指，够减直减”。</p>
+<h3 id="2-去补加还补减类"><a class="header" href="#2-去补加还补减类">2. 去补加还补减类</a></h3>
+<h4 id="1去补加"><a class="header" href="#1去补加">(1）去补加</a></h4>
+<p>两数相加，第二加数超5，不能直接加入，如下列题目：</p>
+<pre><code>1+9            6+9
+2+9(8)         7+9(8)
+3+9(8、7)      8+9(8、7)
+4+9(8、7、6)   9+9(8、7、6)
+</code></pre>
+<p>由于+6=+10-4，+7=+10-3，+8=+10-2，+9=+10-1，指算过程可变成类似形式，如</p>
+<pre><code>8+7=8+(10-3)
+   =10 + (8- 3)
+     ↓       ↓
+   (进1)  (去补)
+或 =（8-3）+ 10
+       ↓    ↓
+    (去补) (进1)
+</code></pre>
+<p>因此，这种类型的指算可归纳成口诀：“直加不够，去补进1”。</p>
+<h4 id="2还补减"><a class="header" href="#2还补减">（2）还补减</a></h4>
+<p>两数相减，减数超5，不能直减。如下列题目：</p>
+<pre><code>10-9(8、7、6)
+15-9(8、7、6)
+11-9(8, 7)
+16-9(8、7)
+12-9(8)
+17-9(8)
+13-9
+18-9
+</code></pre>
+<p>由于-6=-10+4，-7=-10+3，-8=-10+2，-9=－10+1，指算过程可变成类似形式，如</p>
+<pre><code>16-7 = 16 -(10-3)
+     = (16-10) + 3
+       (退1)  (还补)
+或   = (16+3) - 10
+       (还补) (退1)
+</code></pre>
+<p>因此，这种类型的指算可归纳成如下口诀：“直减不够，退一还补”。</p>
+<h3 id="3反手加反手减类"><a class="header" href="#3反手加反手减类">3.反手加反手减类</a></h3>
+<h4 id="1反手加"><a class="header" href="#1反手加">（1）反手加</a></h4>
+<p>先研究这样的例子：</p>
+<pre><code>1+5，由于 1 + 5 = 5 + 1
+      (屈拇)4  1=6(伸拇)
+7+5，由于 7 + 5 = 10 + 2
+      (伸指)3  2=12(屈指)
+</code></pre>
+<p>从这里可得出如下结论：当一个数加上5，可以由原手指直接反手得到其和。不过，手指由伸变屈时须先进1。这种加5的加法比较简单，但它却是其它反手加的基础。</p>
+<pre><code>a)
+4+4(3、2)
+9+4(3、2)
+3+4(3)
+8+4(3)
+2+4
+7+4
+</code></pre>
+<p>上式中由于+4=+5-1，+3=+5-2，+2=+5-3，指算过程可以变成类似形式，如：</p>
+<pre><code>3+4 = 3 + (5 - 1)
+    = (3 + 5) - 1
+      直反手凑
+      
+    = 8-1 = 7
+9+3 = 9 + (5 - 2)
+    = (9 + 5) - 2
+      直反手凑
+    = 14 - 2 = 12
+</code></pre>
+<p>因此，这种类型的指算可归纳如下口诀：“去补不够，反手去凑”。</p>
+<pre><code>b）
+
+0+6(7、8、9)  5+6(7、8、9)
+1+6(7、8)     6+6(7、8)
+2+6(7)       7+6(7)
+3+6          8+6
+</code></pre>
+<p>上式中由于 +6=+5+1，+7=+5+2，+8=+5+3，9=+5+4，指算过程可以变成类似形式，如：</p>
+<pre><code>2 + 7 = 2 + (5 + 2)
+      = (2 + 5) + 2
+        直反手尾
+        ↓
+      = 7 + 2 = 9
+7 + 6 = 7 + (5 + 1)
+      = (7 + 5) + 1
+       直反手尾
+        ↓
+      = 12 + 1 = 13
+</code></pre>
+<p>因此，这种类型的指算可归纳如下口诀：“去补不够，反手还尾”。</p>
+<h4 id="2反手减"><a class="header" href="#2反手减">（2）反手减</a></h4>
+<p>先研究这样的例子：</p>
+<pre><code>6-5   由于    6 - 5 = 5 - 4
+          (伸拇)1 4 = 1(屈拇)
+9-5   由于    9 - 5 = 5 - 1
+         (伸指)4  1 = 4(屈指)
+</code></pre>
+<p>从这里可得如下结论：一个数减去5，可由原手指直接反手得到其差。不过，在反手过程中拇指由屈变伸时，应先退1。这种减5的减法指算方法简单，但它却是其它反手减的基础。</p>
+<pre><code>a)
+6-4(3、2)
+11-4(3、2)
+7-4(3)
+12-4(3)
+8-4
+13-4
+</code></pre>
+<p>上式中由于-4=-5+1，-3=-5+2，-2=-5+3,指算过程可以变成类似形式，如</p>
+<pre><code>7-4=(7-5)+1
+直反手姿
+=
+2+1=3
+12-3=(12-5)+2
+直反手凑
++
+=
+7+2=9
+</code></pre>
+<p>因此，这种类型的指算可归纳如下口诀：“还补不够，反手还凑”。</p>
+<pre><code>b)
+9-6(7、8、9、)
+14-6(7、8、9)
+8-6(7、8)
+13-6(7、8)
+7-6(7)
+12-6(7)
+6-6
+11-6
+</code></pre>
+<p>上式中由于-6=-5-1,-7=-5-2,-8=-5-3，-9=-5-4，指算过程可以变成类似形式，如：</p>
+<pre><code>8-6=(8-5)-1
+直反乎 尾
+=
+3-1=2
+13-8=(13-5)-3
+直反手尾
+?
+=
+8-3=5
+</code></pre>
+<p>因此，这种类型的指算可归纳成如下口诀：“还补不够，
+反手去尾”。</p>
+<h2 id="三多位数加减法"><a class="header" href="#三多位数加减法">三、多位数加减法</a></h2>
+<h3 id="1多位数加法"><a class="header" href="#1多位数加法">1.多位数加法</a></h3>
+<p>多位数加法包括连加。将20以内的指算作为基础，其运算法则是：</p>
+<p>数位对齐，高位加起，逐位累加，写十记个，以个当十。</p>
+<p>运算中脑记(或口读)十位数，手记个位数，当最高位各加数累加（指算）完后，在前位写出十位数，与此同时，个位数当十位数脑记，再对次一位各加数继续累加，这样一直到最末一位各加数累加完为止。</p>
+<p>【例1】 8796+4587=13383</p>
+<pre><code>    8 7 9 6 
+  + 4 5 8 7
+  ——————————
+  1 3 3 8 3
+</code></pre>
+<p>运算程序：</p>
+<ol>
+<li>
+<p>高位加起：8+4得12，写十记个，以个当十，万位
+写1，2变20(脑记)。</p>
+</li>
+<li>
+<p>逐位累加，算百位：27+5得32，千位写3,2变20。算十位：29+8得37，百位写3，7变70。算个位：76+7得83，十位、个位分别写8和3。
+在连加过程中,有时会出现连续进位(即累加超100)的情况，这时可在前位右下角加以脚注，作为过渡，然后，得出最后结果。</p>
+</li>
+</ol>
+<p>【例2】 </p>
+<pre><code>4789 + 3863 + 2564 + 6952 = 18168
+   4 7 8 9
+   3 8 6 3
+   2 5 6 4
+ + 6 9 5 2
+ ——————————
+ 1 7.1 6 8  …… 过渡式
+ ——————————
+ 1 8 1 6 8
+</code></pre>
+<p>运算程序：</p>
+<ol>
+<li>高位加起：4+3得7，7+2得9，9+6得15，写十记个，以个当十，万位写1，5变50（脑记）。</li>
+<li>逐位累加，算百位：57+8得65，65+5得70，70+9得79，千位写7，9变90。算十位：98+6得104，出现连续进位，向前位7的右下角记“1”，继续累加，04+6得10,10+5得15，百位写1，5变50。算个位：59+3得62，62+4得66，66+2得68，十位、个位分别写6和8。</li>
+</ol>
+<h3 id="2多位数减法和加减混合运算"><a class="header" href="#2多位数减法和加减混合运算">2.多位数减法和加减混合运算</a></h3>
+<p>多位数减法，包括连减。在这里，对于减可以按照指算减法逐位计算，也可以运用补数和负数概念将减转化为加，按加法的计算方法计算。现举例介绍第二种方法。</p>
+<p>【例3】7845-2314-3678=1853</p>
+<p>由于314的补数是686，678的补数是322，因此得</p>
+<p>\( -2314 = -3000 + 686 = \overline{3}686 \)</p>
+<p>\( -3678 = -4000 + 322 = \overline{4}322 \)</p>
+<p>按如下竖式计算：</p>
+<pre><code>   7 8 4 5
+   3 6 8 6
+ - 4 3 2 2 ????
+ ——————————
+   1 8 5 3
+</code></pre>
+<p>运算程序：</p>
+<ul>
+<li>
+<p>高位算起：\( 7 + \overline{3} \)（实际上就是7-3，下同）得4， \( 4 + \overline{4}=0 \)。</p>
+</li>
+<li>
+<p>逐位累加，算百位：08+6得14，14+3得17，千位写1，7变70。算十位：74+8得82，82+2得84，百位写8，4变40。算个位：45+6得51，51+2得53，十位、个位分别写5和3。</p>
+</li>
+</ul>
+<p>【例4】 7845-4328+8745-6742=5520，由于328的补数是672，742的补数是258，因此得</p>
+<p>\( -4328=-5000+672=\overline{5}672 \)</p>
+<p>\( -6742=-7000+258=\overline{7}258 \)</p>
+<p>可按如下竖式计算：</p>
+<pre><code>  7845
+  5672
+  8745
++ 7258
+——————
+  5520
+</code></pre>
+<p>运算程序：</p>
+<ul>
+<li>高位算起：7+5得2，2+8得10,10+7得3,3变30。</li>
+<li>逐位累加，算百位：38+6得44，44+7得51，51+2得53，千位写5，3变30。算十位：34+7得41，41+4得45，45+5得50，百位写5，脑记0。算个位：05+2得07,07+5得12，12+8得20，十位、个位分别写2和0。</li>
+</ul>
+<p>必须指出：以上例题（包括多位数加、减、连加、连减及加减混合）在累加运算过程中，都是用指算法进行。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="chapter_3.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="chapter_5.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="chapter_3.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="chapter_5.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -17,3 +17,10 @@ mdbook serve
 2024-06-20 11:30:24 [INFO] (warp::server): listening on http://[::1]:3000
 ```
 启动成功后在浏览器输入 [http://localhost:3000](http://localhost:3000) 。
+
+# 编译
+```
+ mdbook build blog -d dist
+ mdbook build 速算 -d dist
+ mdbook build 计算机基础 -d dist
+```
