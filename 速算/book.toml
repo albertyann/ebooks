@@ -1,0 +1,9 @@
+[book]
+authors = ["云涛"]
+language = "zh"
+multilingual = false
+src = "src"
+title = "史丰收速算"
+
+[output.html]
+mathjax-support = true
