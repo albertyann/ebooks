@@ -20,7 +20,8 @@ mdbook serve
 
 # 编译
 ```
- mdbook build blog -d dist
- mdbook build 速算 -d dist
- mdbook build 计算机基础 -d dist
+mdbook build blog -d dist
+mdbook build 速算 -d dist
+mdbook build 计算机基础 -d dist
+mdbook build 原因与结果法则 -d dist
 ```
