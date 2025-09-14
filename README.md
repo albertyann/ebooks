@@ -18,6 +18,12 @@ mdbook serve
 ```
 启动成功后在浏览器输入 [http://localhost:3000](http://localhost:3000) 。
 
+# 初始化
+```
+cd 到目录
+mdbook init .
+```
+
 # 编译
 ```
 mdbook build blog -d dist
