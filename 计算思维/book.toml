@@ -3,3 +3,7 @@ authors = ["周以真"]
 language = "en"
 src = "src"
 title = "计算思维"
+
+[output.html]
+copy-fonts = true
+additional-css = ["style.css"]
