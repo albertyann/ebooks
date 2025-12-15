@@ -1,3 +1,4 @@
 # Summary
 
-- [Chapter 1](./chapter_1.md)
+- [计算思维](./计算思维.md)
+- [什么是可计算的.md](./什么是可计算的.md)
