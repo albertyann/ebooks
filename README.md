@@ -5,7 +5,7 @@
 
 项目依赖rust一个工具[mdBook](https://rust-lang.github.io/mdBook/)，安装完成后直接在根目录启动服务。
 ```
-mdbook serve
+mdbook serve -怕 9009
 ```
 正常启动如下所示：
 ```
@@ -20,8 +20,5 @@ mdbook serve
 
 # 编译
 ```
-mdbook build blog -d dist
-mdbook build 速算 -d dist
-mdbook build 计算机基础 -d dist
-mdbook build 原因与结果法则 -d dist
+mdbook build 计算思维 -d dist
 ```
