@@ -21,6 +21,8 @@
 按装 50系显卡兼容的 cuda 版本
 ```
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+# 安装vllm会安装上述的依赖包
+pip install -U vllm --pre --extra-index-url https://wheels.vllm.ai/nightly
 ```
 
 找对应环境的flash-attn https://github.com/Dao-AILab/flash-attention/releases，下载并且手动安装。
